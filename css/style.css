@@ -1,0 +1,141 @@
+* {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+
+/* INICIO */
+.add_task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.212);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.add_task input {
+  padding: 6px;
+  margin: 5px;
+  border: 0;
+  border-radius: 20px;
+  font-size: 20px;
+
+}
+
+.add_task button {
+  padding: 6px;
+  margin: 5px;
+  border: 0;
+  border-radius: 20px;
+  width: 90px;
+  background-color: black;
+  color: white;
+}
+
+/* LISTA */
+
+.list_task {
+  padding: 1rem;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0);
+  max-width: 900px;
+  width: 500px;
+
+}
+
+#concluidaList {
+  height: 300px;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: start;
+  padding: 5px;
+
+}
+
+#pendenteList {
+  padding: 5px;
+  height: 300px;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: start;
+
+
+}
+
+span {
+  width: 400px;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+.list_task .itemTask {
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: #656565;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list_task div {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+
+.list_task button {
+  border: 0;
+  font-size: 15px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+textarea {
+  resize: none;
+  width: -webkit-fill-available;
+  border: 0;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 20px;
+  margin: 5px;
+}
+
+p {
+  /* ou auto para exibir a barra de rolagem apenas quando necessário */
+  max-height: 300px;
+  text-wrap: balance;
+  /* ajuste a altura conforme necessário */
+
+}
+
+/* Para navegadores baseados em WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #000000;
+}
