@@ -118,7 +118,8 @@ const EventButtons = () => {
   const check = document.querySelectorAll(".status");
   check.forEach(chk => {
     chk.addEventListener('click', () => {
-      const id = chk.getAttribute("id");
+      const checkId = chk.getAttribute("id");
+      const id = listTask.findIndex(element => element.id == checkId);
       if (chk.checked) {
         const div = chk.closest(".itemTask");
         div.style.backgroundColor = "red";
@@ -127,7 +128,7 @@ const EventButtons = () => {
         showScreen();
       }
       else {
-        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInts(id), "pendente")
+        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(id), "pendente")
         showScreen();
       }
     })

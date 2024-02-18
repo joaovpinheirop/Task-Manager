@@ -55,7 +55,8 @@ main {
 }
 
 #concluidaList {
-  height: 500px display: flex;
+  height: 500px;
+  display: flex;
   overflow-y: auto;
   flex-direction: column;
   justify-content: start;
