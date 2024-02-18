@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <main>
+    <section class="add_task">
+      Add new Task
+      <form id="newTask">
+        <div><input type="text" name="title" id="title" placeholder="title">
+          <input type="date" name="date" id="date">
+        </div>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+        <button type="button" id="add"> Add</button>
+      </form>
+      <div>
+    </section>
+    <section class="list_task">
+      <h1 style="color:gray">Pending</h1>
+      <div id="pendenteList">
+
+      </div>
+    </section>
+    <section class="list_task">
+      <h1 style="color:gray">Concluded</h1>
+      <div id="concluidaList">
+
+      </div>
+    </section>
+    </div>
+  </main>
+</body>
+<script src="./js/task.js"></script>
+
+</html>
