@@ -108,7 +108,7 @@ const EventButtons = () => {
     btn.addEventListener('click', () => {
       const index = btn.getAttribute('data-index');
       const div = btn.closest(".itemTask");
-      Remove(listTask, parseInt(index, 10));
+      Remove(listTask, parseInt(index));
       if (div) {
         div.remove();
       }
@@ -123,11 +123,11 @@ const EventButtons = () => {
         const div = chk.closest(".itemTask");
         div.style.backgroundColor = "red";
         div.remove();
-        Modify(listTask[id].title, listTask[id].description, listTask[id].data, id, "concluido")
+        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(id), "concluido")
         showScreen();
       }
       else {
-        Modify(listTask[id].title, listTask[id].description, listTask[id].data, id, "pendente")
+        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInts(id), "pendente")
         showScreen();
       }
     })
