@@ -108,7 +108,7 @@ const EventButtons = () => {
     btn.addEventListener('click', () => {
       const index = btn.getAttribute('data-index');
       const div = btn.closest(".itemTask");
-      Remove(listTask, parseInt(index, 10));
+      Remove(listTask, parseInt(index));
       if (div) {
         div.remove();
       }
