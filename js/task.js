@@ -1,9 +1,27 @@
 // ==== Fragment  ====
-
-
 // ==== List Tasks ====
 let listTask = []; // list task
 let idTasks = 0; // id task
+
+window.addEventListener('load', () => {
+
+
+
+  // Percorrer todos os itens no localStorage
+  for (let i = 0; i < localStorage.length; i++) {
+    const item = localStorage.key(i);
+    listTask.push(JSON.parse(localStorage.getItem(item)))
+    console.log(listTask)
+  }
+  // Show in Screen
+  showScreen();
+  if (listTask) {
+    idTasks = listTask[listTask.length - 1].id;
+    idTasks++;
+  } console.log(idTasks)
+})
+
+
 
 const btnAdd = document.getElementById('add');
 btnAdd.addEventListener('click', () => {
@@ -42,9 +60,12 @@ class Task {
 // ==== Create and Add new element in list Task ====
 const Add = (title, description, data) => {
 
+  let id = idTasks++;
   // add object in list task
-  const task = NewTask(title, description, data, idTasks++, "pendente")
+  const task = NewTask(title, description, data, id, "pendente")
+  localStorage.setItem(id, JSON.stringify(task));
   listTask.push(task)
+  console.log(listTask)
 
   // Show in Screen
   showScreen();
@@ -56,11 +77,16 @@ const Modify = (newTitle, newDescription, newData, local, state) => {
   // Modify taks
   const modify = NewTask(newTitle, newDescription, newData, local, state);
   listTask[local] = modify;
+
+  localStorage.setItem(local, JSON.stringify(modify))
 }
 
 // ==== Remove Task ====
 const Remove = (list, id) => {
   listTask = list.filter(element => element.id !== id);
+
+  // Remover a Task do localStorage
+  localStorage.removeItem(id);
 }
 
 // ==== Create New Objetct ====
@@ -133,5 +159,9 @@ const EventButtons = () => {
       }
     })
   })
+
+
 }
+
+
 
