@@ -1,0 +1,13 @@
+{
+  "name": "lista-de-tarefas",
+  "version": "0.1.0",
+  "description": "Task Manager",
+  "main": "app.js",
+  "scripts": {
+    "app": "node app.js",
+    "test": "test"
+  },
+  "author": "joao",
+  "license": "ISC",
+  "keywords": []
+}
