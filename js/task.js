@@ -1,27 +1,34 @@
+
+
 // ==== Fragment  ====
 // ==== List Tasks ====
 let listTask = []; // list task
 let idTasks = 0; // id task
 
 window.addEventListener('load', () => {
-
-
-
   // Percorrer todos os itens no localStorage
   for (let i = 0; i < localStorage.length; i++) {
     const item = localStorage.key(i);
     listTask.push(JSON.parse(localStorage.getItem(item)))
-    console.log(listTask)
   }
+
   // Show in Screen
   showScreen();
-  if (listTask) {
-    idTasks = listTask[listTask.length - 1].id;
-    idTasks++;
-  } console.log(idTasks)
+  idTasks = Maior(listTask) + 1;
+  console.log(idTasks)
 })
 
+const Maior = (list) => {
+  let maior = list[0].id;
 
+  for (let i = 0; i < list.length; i++) {
+    if (parseInt(list[i].id) >= maior) {
+      maior = list[i].id
+    }
+
+  }
+  return maior
+}
 
 const btnAdd = document.getElementById('add');
 btnAdd.addEventListener('click', () => {
@@ -35,7 +42,7 @@ btnAdd.addEventListener('click', () => {
 
   // Verificar se todos os campos estão preenchidos
   if (title.trim() === '' || description.trim() === '' || date.length !== 3) {
-    alert('Por favor, preencha todos os campos antes de adicionar.');
+    alert('Por favor, preencha todos os campos antes de adicionar...');
     return; // Impede que o código abaixo seja executado
   }
   const dateFormat = `${dia}/${mes}/${ano}`
@@ -57,32 +64,27 @@ class Task {
   }
 }
 
-// ==== Create and Add new element in list Task ====
+// ==== Create and Add new element ====
 const Add = (title, description, data) => {
-
+  // Id
   let id = idTasks++;
+
   // add object in list task
   const task = NewTask(title, description, data, id, "pendente")
+
+  // Set LocalStorage
   localStorage.setItem(id, JSON.stringify(task));
   listTask.push(task)
-  console.log(listTask)
 
   // Show in Screen
   showScreen();
 }
 
-//==== Modify Task ====
-const Modify = (newTitle, newDescription, newData, local, state) => {
 
-  // Modify taks
-  const modify = NewTask(newTitle, newDescription, newData, local, state);
-  listTask[local] = modify;
-
-  localStorage.setItem(local, JSON.stringify(modify))
-}
 
 // ==== Remove Task ====
 const Remove = (list, id) => {
+  // Filter 
   listTask = list.filter(element => element.id !== id);
 
   // Remover a Task do localStorage
@@ -127,6 +129,19 @@ const showScreen = () => {
   EventButtons();
 }
 
+
+//==== Modify Task ====
+const Modify = (checkId, state) => {
+  const id = listTask.findIndex(element => element.id == checkId);
+  // Modify taks
+  const modify = NewTask(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(checkId), state);
+  listTask[id] = modify;
+
+  // Set LocalStorage modify
+  localStorage.setItem(checkId, JSON.stringify(modify))
+  showScreen();
+}
+
 // ==== EventsButtons ====
 const EventButtons = () => {
   const btnClear = document.querySelectorAll('.clear');
@@ -145,17 +160,14 @@ const EventButtons = () => {
   check.forEach(chk => {
     chk.addEventListener('click', () => {
       const checkId = chk.getAttribute("id");
-      const id = listTask.findIndex(element => element.id == checkId);
+
       if (chk.checked) {
-        const div = chk.closest(".itemTask");
-        div.style.backgroundColor = "red";
-        div.remove();
-        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(id), "concluido")
-        showScreen();
+
+        Modify(checkId, "concluido")
       }
       else {
-        Modify(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(id), "pendente")
-        showScreen();
+
+        Modify(checkId, "pendente")
       }
     })
   })
