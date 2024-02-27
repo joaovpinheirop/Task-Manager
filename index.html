@@ -14,8 +14,14 @@
 
 <body>
   <main>
+    <h1 style="font-size: 100px; margin: 5px;">Hello</h1>
+    <h3>My Task</h3>
+    <!-- <ol class="menu-taks">
+      <li>Pending </li>
+      <li>Concluded </li>
+      <li>Show All </li>
+    </ol> -->
     <section class="add_task">
-      Add new Task
       <form id="newTask">
         <div><input type="text" name="title" id="title" placeholder="title">
           <input type="date" name="date" id="date">
@@ -26,19 +32,21 @@
       <div>
     </section>
     <section class="list_task">
-      <h1 style="color:gray">Pending</h1>
       <div id="pendenteList">
-
-      </div>
-    </section>
-    <section class="list_task">
-      <h1 style="color:gray">Concluded</h1>
-      <div id="concluidaList">
-
       </div>
     </section>
     </div>
+
+    <section id="creator-task" class="NewTask">
+      <div>
+        <img src="./img/Add.png" alt="">
+        <button> Create new Task</button>
+      </div>
+    </section>
+    version 0.1.1
   </main>
+
+
 </body>
 <script src="./js/task.js"></script>
 

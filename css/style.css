@@ -2,44 +2,119 @@
   font-family: "Josefin Sans", sans-serif;
 }
 
-main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+body {
+  background-color: #ECECEC;
 
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-/* INICIO */
+
+/* ADD TASK */
+
+
+textarea {
+  resize: none;
+  width: -webkit-fill-available;
+  border: 0;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 20px;
+  margin: 5px;
+  background-color: #D9D9D9;
+}
+
+textarea:focus {
+  outline: none;
+}
+
 .add_task {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
-  background-color: rgba(0, 0, 0, 0.212);
+  width: max-content;
+  max-width: 400px;
+  background-color: white;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 30px;
+  box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.417);
 }
 
 .add_task input {
-  padding: 6px;
+  padding: 15px;
   margin: 5px;
   border: 0;
+  width: 156px;
   border-radius: 20px;
   font-size: 20px;
+  background-color: #D9D9D9;
+  color: black;
 
 }
 
+input:focus {
+  border: 0;
+  outline: none;
+}
+
 .add_task button {
-  padding: 6px;
+  padding: 1rem;
   margin: 5px;
   border: 0;
-  border-radius: 20px;
-  width: 90px;
+  border-radius: 40px;
+  width: -webkit-fill-available;
   background-color: black;
   color: white;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+/* CHECK BOX */
+.ball {
+  position: absolute;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.ball {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.ball label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #D9D9D9;
+  border: 1px solid #8d8d8d;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.ball input:checked+label {
+  background-color: rgb(0, 128, 255);
+  border: 1px solid rgb(0, 140, 255);
+}
+
+.ball input:checked+label::after {
+  content: '\2713';
+  font-size: 15px;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* LISTA */
@@ -48,30 +123,18 @@ main {
   padding: 1rem;
   margin: 10px;
   border-radius: 10px;
-  background-color: rgb(0, 0, 0);
   max-width: 900px;
-  width: 500px;
+  width: -webkit-fill-available;
 
 }
 
-#concluidaList {
-  height: 500px;
-  display: flex;
-  overflow-y: auto;
-  flex-direction: column;
-  justify-content: start;
-  padding: 5px;
-
-}
 
 #pendenteList {
   padding: 5px;
-  height: 500px;
+  height: 400px;
   overflow-y: auto;
   flex-direction: column;
   justify-content: start;
-
-
 }
 
 span {
@@ -81,42 +144,72 @@ span {
 }
 
 .list_task .itemTask {
+  transition: 2s;
+  margin: 0px;
+  padding: 1rem;
   margin-bottom: 5px;
   border-radius: 10px;
-  background-color: #656565;
-  color: white;
+  background-color: #D9D9D9;
+  color: rgb(0, 0, 0);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.list_task div {
-  display: flex;
-  width: 100%;
-  height: auto;
+  width: -webkit-fill-available;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 
+
+.list_task div {
+  height: auto;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+
+.detail {
+  transition: 2s;
+  width: -webkit-fill-available;
+  margin-bottom: 5px;
+}
+
+.add_task {
+  position: fixed;
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.invisible {
+  display: none;
+}
+
+
+.itemTask:hover {
+  transition: 2s;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.46);
+}
+
 .list_task button {
+  padding: 10px;
+  margin: 5px;
   border: 0;
   font-size: 15px;
   border-radius: 20px;
-  padding: 10px;
+  width: min-content;
 }
 
-textarea {
-  resize: none;
-  width: -webkit-fill-available;
-  border: 0;
-  border-radius: 10px;
-  padding: 5px;
-  font-size: 20px;
-  margin: 5px;
-}
+
+
+
 
 p {
   /* ou auto para exibir a barra de rolagem apenas quando necessário */
@@ -126,16 +219,52 @@ p {
 
 }
 
+/* MENU */
+.menu-taks li {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 10px;
+}
+
+.menu-taks {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.NewTask div {
+  transform: translate(-50%, -50%);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 70%;
+  top: 90%;
+  padding: 20px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+}
+
+.NewTask button {
+  border: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 /* Para navegadores baseados em WebKit (Chrome, Safari) */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #ffffff;
+  background-color: #000000;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #000000;
+  background-color: #00000000;
 }

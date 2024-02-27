@@ -1,8 +1,8 @@
 
+const addtask = document.querySelector('.add_task');
 
-// ==== Fragment  ====
 // ==== List Tasks ====
-let listTask = []; // list task
+let listTask = [];
 let idTasks = 0; // id task
 
 window.addEventListener('load', () => {
@@ -12,45 +12,10 @@ window.addEventListener('load', () => {
     listTask.push(JSON.parse(localStorage.getItem(item)))
   }
 
+  idTasks = obterMaiorId(listTask) + 1;
+
   // Show in Screen
   showScreen();
-  idTasks = Maior(listTask) + 1;
-  console.log(idTasks)
-})
-
-const Maior = (list) => {
-  let maior = list[0].id;
-
-  for (let i = 0; i < list.length; i++) {
-    if (parseInt(list[i].id) >= maior) {
-      maior = list[i].id
-    }
-
-  }
-  return maior
-}
-
-const btnAdd = document.getElementById('add');
-btnAdd.addEventListener('click', () => {
-
-  let title = document.getElementById('title').value
-  let description = document.getElementById('description').value
-  let date = document.getElementById('date').value.split('-')
-  let dia = date[2];
-  let mes = date[1];
-  let ano = date[0];
-
-  // Verificar se todos os campos estão preenchidos
-  if (title.trim() === '' || description.trim() === '' || date.length !== 3) {
-    alert('Por favor, preencha todos os campos antes de adicionar...');
-    return; // Impede que o código abaixo seja executado
-  }
-  const dateFormat = `${dia}/${mes}/${ano}`
-
-  Add(title, description, dateFormat, idTasks);
-
-  document.getElementById('title').value = "";
-  document.getElementById('description').value = "";
 })
 
 // ==== Object Task ====
@@ -64,11 +29,22 @@ class Task {
   }
 }
 
-// ==== Create and Add new element ====
-const Add = (title, description, data) => {
-  // Id
-  let id = idTasks++;
 
+const obterMaiorId = (list) => {
+  let maior = list[0].id;
+
+  for (let i = 0; i < list.length; i++) {
+    if (parseInt(list[i].id) >= maior) {
+      maior = list[i].id
+    }
+
+  }
+
+  return maior;
+}
+
+// ==== Create and Add new element ====
+const Add = (title, description, data, id = idTasks++) => {
   // add object in list task
   const task = NewTask(title, description, data, id, "pendente")
 
@@ -80,7 +56,17 @@ const Add = (title, description, data) => {
   showScreen();
 }
 
+//==== Modify Task ====
+const Modify = (checkId, state) => {
+  const id = listTask.findIndex(element => element.id == checkId);
+  // Modify taks
+  const modify = NewTask(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(checkId), state);
+  listTask[id] = modify;
 
+  // Set LocalStorage modify
+  localStorage.setItem(checkId, JSON.stringify(modify))
+  showScreen();
+}
 
 // ==== Remove Task ====
 const Remove = (list, id) => {
@@ -97,53 +83,54 @@ const NewTask = (title, description, data, id, state) => {
 }
 
 // ==== Ler lista ====
-const showScreen = () => {
+function showScreen() {
   let textPendente = ``;
-  let textConcluido = ``;
-  listTask.forEach((value, i, refList) => {
+
+  listTask.forEach((value) => {
     if (value.state == "pendente") {
-      textPendente += `<div class="itemTask">
-    <div><input class="status" type="checkbox" id="${value.id}">
-    <p>${value.title}</p>
-    <p>${value.data}</p>
-    <button class="clear" data-index="${value.id}">apagar</button></div>
-    <div> <span>${value.description}</span></div>
+
+      textPendente += ` <div class="itemTask">
+      <div>
+        <p class="title">${value.title}</p>
+        <p>${value.data}</p>
+        <span class="detail">${value.description}</span>
+        <button class="clear" data-index="${value.id}">apagar</button>
+      </div>
+
+      <div class="ball">
+        <input class="status" type="checkbox" id="${value.id}" >
+        <label for="${value.id}"></label>
+      </div>
   </div>`
     }
     if (value.state == "concluido") {
-      textConcluido += `<div class="itemTask">
-    <div><input class="status" type="checkbox" id="${value.id}" checked>
-    <p>${value.title}</p>
-    <p>${value.data}</p>
-    <button class="clear" data-index="${value.id}">apagar</button></div>
-    <div> <span>${value.description}</span></div>
+      textPendente += `
+    <div class="itemTask">
+      <div>
+        <p class="title">${value.title}</p>
+        <p>${value.data}</p>
+        <span>${value.description}</span>
+        <button class="clear" data-index="${value.id}">apagar</button>
+      </div>
+
+      <div class="ball">
+        <input class="status" type="checkbox" id="${value.id}" checked>
+        <label for="${value.id}"></label>
+      </div>
   </div>`
     }
   });
 
   const pendenteList = document.getElementById("pendenteList")
-  const concluidaList = document.getElementById("concluidaList")
   pendenteList.innerHTML = textPendente
-  concluidaList.innerHTML = textConcluido
   console.log(listTask)
   EventButtons();
 }
 
 
-//==== Modify Task ====
-const Modify = (checkId, state) => {
-  const id = listTask.findIndex(element => element.id == checkId);
-  // Modify taks
-  const modify = NewTask(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(checkId), state);
-  listTask[id] = modify;
-
-  // Set LocalStorage modify
-  localStorage.setItem(checkId, JSON.stringify(modify))
-  showScreen();
-}
-
 // ==== EventsButtons ====
-const EventButtons = () => {
+function EventButtons() {
+  // Clear
   const btnClear = document.querySelectorAll('.clear');
   btnClear.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -156,6 +143,7 @@ const EventButtons = () => {
     });
   });
 
+  // Check Box
   const check = document.querySelectorAll(".status");
   check.forEach(chk => {
     chk.addEventListener('click', () => {
@@ -171,9 +159,47 @@ const EventButtons = () => {
       }
     })
   })
-
-
 }
 
 
+// === Button Add task===
+const btnAdd = document.getElementById('add');
+btnAdd.addEventListener('click', () => {
 
+
+  // Get Values
+  let title = document.getElementById('title').value
+  let description = document.getElementById('description').value
+  let date = document.getElementById('date').value.split('-')
+  let dia = date[2];
+  let mes = date[1];
+  let ano = date[0];
+
+
+  // Verificar se todos os campos estão preenchidos
+  if (title.trim() === '' || description.trim() === '' || date.length !== 3) {
+    alert('Por favor, preencha todos os campos antes de adicionar...');
+    return; // Impede que o código abaixo seja executado
+  }
+  const dateFormat = `${dia}/${mes}/${ano}`
+
+  Add(title, description, dateFormat);
+
+  document.getElementById('title').value = "";
+  document.getElementById('description').value = "";
+  Visible(addtask)
+})
+
+
+// === Button creator new Task === 
+const CreatorTask = document.getElementById('creator-task');
+CreatorTask.addEventListener('click', () => {
+  Visible(addtask)
+})
+
+
+function Visible(Button) {
+  if (Button.classList.contains("visible")) {
+    Button.classList.remove("visible")
+  } else { Button.classList.add("visible") }
+}
