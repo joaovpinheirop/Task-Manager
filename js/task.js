@@ -1,17 +1,17 @@
 
-const addtask = document.querySelector('.add_task');
-
 // ==== List Tasks ====
 let listTask = [];
-let idTasks = 0; // id task
+let idTasks = 0;
+const addtask = document.querySelector('.add_task');
 
+// === Load Page === 
 window.addEventListener('load', () => {
   // Percorrer todos os itens no localStorage
+
   for (let i = 0; i < localStorage.length; i++) {
     const item = localStorage.key(i);
     listTask.push(JSON.parse(localStorage.getItem(item)))
   }
-
   idTasks = obterMaiorId(listTask) + 1;
 
   // Show in Screen
@@ -28,7 +28,6 @@ class Task {
     this.state = state
   }
 }
-
 
 const obterMaiorId = (list) => {
   let maior = list[0].id;
@@ -59,6 +58,7 @@ const Add = (title, description, data, id = idTasks++) => {
 //==== Modify Task ====
 const Modify = (checkId, state) => {
   const id = listTask.findIndex(element => element.id == checkId);
+
   // Modify taks
   const modify = NewTask(listTask[id].title, listTask[id].description, listTask[id].data, parseInt(checkId), state);
   listTask[id] = modify;
@@ -140,27 +140,18 @@ function EventButtons() {
       if (div) {
         div.remove();
       }
-    });
-  });
+    })
+  })
 
   // Check Box
   const check = document.querySelectorAll(".status");
   check.forEach(chk => {
     chk.addEventListener('click', () => {
       const checkId = chk.getAttribute("id");
-
-      if (chk.checked) {
-
-        Modify(checkId, "concluido")
-      }
-      else {
-
-        Modify(checkId, "pendente")
-      }
+      chk.checked ? Modify(checkId, "concluido") : Modify(checkId, "pendente")
     })
   })
 }
-
 
 // === Button Add task===
 const btnAdd = document.getElementById('add');
@@ -174,19 +165,18 @@ btnAdd.addEventListener('click', () => {
   let dia = date[2];
   let mes = date[1];
   let ano = date[0];
-
+  const dateFormat = `${dia}/${mes}/${ano}`
 
   // Verificar se todos os campos estão preenchidos
   if (title.trim() === '' || description.trim() === '' || date.length !== 3) {
     alert('Por favor, preencha todos os campos antes de adicionar...');
     return; // Impede que o código abaixo seja executado
   }
-  const dateFormat = `${dia}/${mes}/${ano}`
-
   Add(title, description, dateFormat);
 
   document.getElementById('title').value = "";
   document.getElementById('description').value = "";
+
   Visible(addtask)
 })
 
